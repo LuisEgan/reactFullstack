@@ -21,7 +21,8 @@ passport.use( new GoogleStrategy(
     {
         clientID: keys.googleClientID,
         clientSecret: keys.googleClientSecret,
-        callbackURL: '/auth/google/callback'
+        callbackURL: '/auth/google/callback',
+        proxy: true //tell google stratgety to trust a proxy if the redirection comes from one (like with heroku)
     }, (accesToken, refreshToken, profile, done) => {
         User.findOne({googleId: profile.id}).then(existingUser =>{
             if(existingUser){
