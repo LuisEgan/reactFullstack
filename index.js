@@ -1,34 +1,38 @@
 const exppress = require('express');
-const mongoose = require('mongoose');
-const cookieSession = require('cookie-session');
-const passport = require('passport');
-const bodyParser = require('body-parser');
+// const mongoose = require('mongoose');
+// const cookieSession = require('cookie-session');
+// const passport = require('passport');
+// const bodyParser = require('body-parser');
 
-// CUSTOM MODULES
-const keys = require('./config/keys');
-const authRoutes = require('./routes/authRoutes');
+// // CUSTOM MODULES
+// const keys = require('./config/keys');
+// const authRoutes = require('./routes/authRoutes');
 
-// MODELS
-require('./models/User');
+// // MODELS
+// require('./models/User');
 
-// API SERVICES
-require('./services/passport');
+// // API SERVICES
+// require('./services/passport');
 
-// DB CONNECTION
-mongoose.connect(keys.mongoURI);
+// // DB CONNECTION
+// mongoose.connect(keys.mongoURI);
 
 const app = exppress();
 
-// PASSPORT COOKIES AUTH CONFIG
-app.use(cookieSession({
-    maxAge: 30 * 24 * 60 * 60 * 1000, //days * hours in day * minutes in hours * seconds in minutes * milliseconds in second
-    keys: [keys.cookieKey]
-}));
-app.use(passport.initialize());
-app.use(passport.session());
+// // PASSPORT COOKIES AUTH CONFIG
+// app.use(cookieSession({
+//     maxAge: 30 * 24 * 60 * 60 * 1000, //days * hours in day * minutes in hours * seconds in minutes * milliseconds in second
+//     keys: [keys.cookieKey]
+// }));
+// app.use(passport.initialize());
+// app.use(passport.session());
 
-// AUTHENTICATION ROUTES
-authRoutes(app);
+// // AUTHENTICATION ROUTES
+// authRoutes(app);
+
+app.get("/", (req, res) => {
+    res.send(";p");
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
