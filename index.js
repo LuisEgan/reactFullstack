@@ -36,4 +36,5 @@ app.listen(PORT, () => {
     console.log("Server up and ready to go!");
 });
 
-process.on('SIGHUP', () => { console.log("c ya"); process.exit(0); });
+// process.on('SIGUSR2', () => { process.exit(0); });
+// process.on('SIGHUP', () => { console.log("c ya"); process.exit(0); });

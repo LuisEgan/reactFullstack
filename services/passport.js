@@ -23,23 +23,19 @@ passport.use( new GoogleStrategy(
         clientSecret: keys.googleClientSecret,
         callbackURL: '/auth/google/callback',
         proxy: true //tell google stratgety to trust a proxy if the redirection comes from one (like with heroku)
-    }, (accesToken, refreshToken, profile, done) => {
-        User.findOne({googleId: profile.id}).then(existingUser =>{
-            if(existingUser){
-                console.log("IT EXISTS!");
-                done(null, existingUser);
-            }
-            else{
-                let newUser = {
-                    googleId: profile.id
-                };
+    },
+    async (accesToken, refreshToken, profile, done) => {
+        const existingUser = await User.findOne({googleId: profile.id});
+        if(existingUser){
+            console.log("IT EXISTS!");
+            return done(null, existingUser);
+        }
+        
+        let newUser = {
+            googleId: profile.id
+        };
 
-                new User(newUser)
-                    .save()
-                    .then(user => {
-                        done(null, user);
-                    });
-            }
-        });
+        const user = await new User(newUser).save();
+        done(null, user);
     }
 ));
