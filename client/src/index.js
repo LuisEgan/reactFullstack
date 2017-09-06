@@ -8,6 +8,9 @@ import reducers from './reducers';
 
 const store = createStore(reducers, {}, applyMiddleware());
 
+//Provider component is what handles all redux states
+//App is all that is rendered (based on the redux's states)
+
 ReactDOM.render(
     <Provider store={store}>
         <App />
