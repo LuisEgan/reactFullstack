@@ -2,13 +2,6 @@ import axios from 'axios';
 import { FETCH_USER } from './types';
 
 //ES6 Syntax
-// export const fetchUser = () => async dispatch => {
-//     const res = await axios.get('/api/current_user');
-//     dispatch({
-//         type: FETCH_USER,
-//         payload: res.data
-//     });
-// }
 
 //Even more
 export const fetchUser = () => async dispatch => dispatch({
@@ -16,6 +9,19 @@ export const fetchUser = () => async dispatch => dispatch({
     payload: (await axios.get('/api/current_user')).data
 });
 
+export const handleToken = token => async dispatch => dispatch({
+    type: FETCH_USER,
+    payload: (await axios.post('/api/stripe', token)).data
+});
+
+
+// export const fetchUser = () => async dispatch => {
+//     const res = await axios.get('/api/current_user');
+//     dispatch({
+//         type: FETCH_USER,
+//         payload: res.data
+//     });
+// }
 
 // export const fetchUser = () => {
 //     //With redux-thunk

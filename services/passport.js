@@ -12,8 +12,10 @@ passport.serializeUser((user, done) => {
 
 // this unencrypts the cookie id into a user id
 passport.deserializeUser((id, done) => {
-    done(null, id);
-});
+    User.findById(id).then(user => {
+      done(null, user);
+    });
+  });
 
 
 // tell passport to use the google stratgety with its config
@@ -27,15 +29,10 @@ passport.use( new GoogleStrategy(
     async (accesToken, refreshToken, profile, done) => {
         const existingUser = await User.findOne({googleId: profile.id});
         if(existingUser){
-            console.log("IT EXISTS!");
-            return done(null, existingUser);
+            return done(null, existingUser); //done(error, user)
         }
         
-        let newUser = {
-            googleId: profile.id
-        };
-
-        const user = await new User(newUser).save();
+        const user = await new User({ googleId: profile.id }).save();
         done(null, user);
     }
 ));

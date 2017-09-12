@@ -7,17 +7,22 @@ const bodyParser = require('body-parser');
 // CUSTOM MODULES
 const keys = require('./config/keys');
 const authRoutes = require('./routes/authRoutes');
-
-// MODELS
-require('./models/User');
-
-// API SERVICES
-require('./services/passport');
+const billingRoutes = require('./routes/billingRoutes');
 
 // DB CONNECTION
 mongoose.connect(keys.mongoURI);
 
+// MODELS
+require('./models/User');
+
+
+// API SERVICES
+require('./services/passport');
+
 const app = exppress();
+
+// EXPRESS MIDDLEWARES app.use()
+app.use(bodyParser.json());
 
 // PASSPORT COOKIES AUTH CONFIG
 app.use(cookieSession({
@@ -29,6 +34,8 @@ app.use(passport.session());
 
 // AUTHENTICATION ROUTES
 authRoutes(app);
+// BILLING ROUTES
+billingRoutes(app);
 
 
 const PORT = process.env.PORT || 5000;
