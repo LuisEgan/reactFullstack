@@ -16,7 +16,8 @@ class Header extends Component {
             default: //if user is logged in and auth is an object
                 return [
                     <li key="1"><Payments /></li>,
-                    <li key="2"><a href="/api/logout">Logout</a></li>
+                    <li key="2">Current Credits: {this.props.auth.credits}</li>,
+                    <li key="3"><a href="/api/logout">Logout</a></li>
                 ];
         }
     }
